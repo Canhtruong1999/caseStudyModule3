@@ -29,6 +29,12 @@ public class Tour_tag {
         this.tag_id = tag_id;
     }
 
+    public Tour_tag(int tour_tag_id, int tour_id, int tag_id) {
+        this.tour_tag_id = tour_tag_id;
+        this.tour_id = tour_id;
+        this.tag_id = tag_id;
+    }
+
     public Tour_tag(int tour_id, int tag_id) {
         this.tour_id = tour_id;
         this.tag_id = tag_id;

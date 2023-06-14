@@ -20,4 +20,10 @@ public class TourService {
     public int findId(){
        return tourDao.findID();
     }
+    public void edit(Tour tour){
+        tourDao.updateTour(tour);
+    }
+    public void delete(int id ){
+        tourDao.deleteTour(id);
+    }
 }
