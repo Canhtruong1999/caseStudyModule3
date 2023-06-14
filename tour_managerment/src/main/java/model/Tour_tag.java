@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 public class Tour_tag {
     private int tour_tag_id;

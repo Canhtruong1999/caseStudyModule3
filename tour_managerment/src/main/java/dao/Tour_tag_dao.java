@@ -1,8 +1,6 @@
-package Dao;
+package dao;
 
-import Model.Tag;
-import Model.Tour;
-import Model.Tour_tag;
+import model.Tour_tag;
 
 import java.sql.*;
 import java.util.ArrayList;

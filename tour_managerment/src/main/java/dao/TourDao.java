@@ -1,7 +1,7 @@
-package Dao;
+package dao;
 
-import Model.Tour;
-import pageable.PageAble;
+import model.Tour;
+import dto.Pageable;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -22,7 +22,7 @@ public class TourDao extends ConectionDatabase {
     private final String UPDATE_TOUR = "UPDATE `tour`.`tours` SET `name` = ?, `price` = ?, `start_time` = ?, `end_time` = ?, `img` = ?, `description` = ? WHERE (`tour_id` = ?);";
     private final String DELETE_TOUR = "DELETE FROM `tour`.`tours` WHERE (`tour_id` = ?);";
 
-    public List<Tour> findAll(PageAble pageAble) {
+    public List<Tour> findAll(Pageable pageAble) {
         List<Tour> tours = new ArrayList<>();
         String search = pageAble.getSearch();
         if (search == null) {

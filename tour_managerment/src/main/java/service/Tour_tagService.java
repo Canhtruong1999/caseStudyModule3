@@ -1,7 +1,7 @@
 package service;
 
-import Dao.Tour_tag_dao;
-import Model.Tour_tag;
+import dao.Tour_tag_dao;
+import model.Tour_tag;
 
 import java.util.List;
 

@@ -1,6 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="header.jsp" />
-<a href="tours">dâdada</a>
+<a href="tours">tour</a>
+
+
 <form action="tours" method="get">
     <input type="search" name="search" id="search" value="${pageable.search}" onsearch="onClearSearch()" />
     <button id="searchButton">Search</button>

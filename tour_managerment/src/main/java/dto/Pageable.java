@@ -1,6 +1,6 @@
-package pageable;
+package dto;
 
-public class PageAble {
+public class Pageable {
     private String search;
     private int page;
     private int totalItems =5;
@@ -29,13 +29,13 @@ public class PageAble {
         return search;
     }
 
-    public PageAble(String search, int page, int totalItems) {
+    public Pageable(String search, int page, int totalItems) {
         this.search = search;
         this.page = page;
         this.totalItems = totalItems;
     }
 
-    public PageAble(String search, int page, int totalItems, String nameField, String sortBy) {
+    public Pageable(String search, int page, int totalItems, String nameField, String sortBy) {
         this.search = search;
         this.page = page;
         this.totalItems = totalItems;
@@ -71,7 +71,7 @@ public class PageAble {
         this.totalPage = totalPage;
     }
 
-    public PageAble(String search, int page, int totalItems, int totalPage) {
+    public Pageable(String search, int page, int totalItems, int totalPage) {
         this.search = search;
         this.page = page;
         this.totalItems = totalItems;
