@@ -1,7 +1,7 @@
 package service;
 
-import Dao.TagDao;
-import Model.Tag;
+import dao.TagDao;
+import model.Tag;
 
 import java.util.List;
 

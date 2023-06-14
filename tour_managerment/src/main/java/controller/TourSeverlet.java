@@ -1,9 +1,9 @@
-package Controller;
+package controller;
 
-import Model.Tag;
-import Model.Tour;
-import Model.Tour_tag;
-import pageable.PageAble;
+import model.Tag;
+import model.Tour;
+import model.Tour_tag;
+import dto.Pageable;
 import service.TagService;
 import service.TourService;
 import service.Tour_tagService;
@@ -38,18 +38,35 @@ public class TourSeverlet extends HttpServlet {
                 showEdit(req,resp);
                 break;
             case"delete":
-                //deleteBook(req,resp);
+                deleteTour(req,resp);
                 break;
             default:
                 showTour(req,resp);
         }
     }
 
-    private void showEdit(HttpServletRequest req, HttpServletResponse resp) {
+    private void deleteTour(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int id = Integer.parseInt(req.getParameter("id"));
+        tour_tagService.deleteByTourId(id);
+        tourService.delete(id);
+
+        showTour(req,resp);
+    }
+
+    @Override
+    public void init() throws ServletException {
+
+    }
+
+    private void showEdit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int tour_id = Integer.parseInt(req.getParameter("id"));
-       Tour tour= tourService.findById(tour_id);
-        List<Integer> tour_tag_id= tour_tagService.findTourTagid(tour.getTour_id());
-       List<Tag> tagList =tagService.findAll();
+        Tour tour= tourService.findById(tour_id);
+        List<Tour_tag> tour_tag= tour_tagService.findTourTagid(tour.getTour_id());
+        List<Tag> tagList =tagService.findAll();
+        req.setAttribute("tour",tour);
+        req.setAttribute("tagList",tagList);
+        req.setAttribute("tour_tag",tour_tag);
+        req.getRequestDispatcher("edit.jsp").forward(req,resp);
     }
 
     private void showCreate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -72,7 +89,7 @@ public class TourSeverlet extends HttpServlet {
         if(req.getParameter("sortby") != null){
             sortby = req.getParameter("sortby");
         }
-        PageAble pageAble =new PageAble(search,page,totalItem,fieldName,sortby);
+        Pageable pageAble =new Pageable(search,page,totalItem,fieldName,sortby);
         req.setAttribute("pageable",pageAble);
         List<Tour> tours =tourService.findAll(pageAble);
         req.setAttribute("tours",tourService.findAll(pageAble));
@@ -88,7 +105,7 @@ public class TourSeverlet extends HttpServlet {
                 createTour(req,resp);
                 break;
             case"edit":
-             //   editBook(req,resp);
+                editTour(req,resp);
             default:
                 //   showProduct(req,resp);
         }
@@ -98,21 +115,43 @@ public class TourSeverlet extends HttpServlet {
         String name = req.getParameter("name");
         Double price= Double.valueOf(req.getParameter("price"));
         LocalDate start_time = LocalDate.parse(req.getParameter("start_time"));
-        LocalDate end_time = LocalDate.parse(req.getParameter("start_time"));
+        LocalDate end_time = LocalDate.parse(req.getParameter("end_time"));
         String img =req.getParameter("img");
         String description =req.getParameter("description");
         Tour tour=new Tour(name,price,start_time,end_time,img,description);
         tourService.create(tour);
         int tour_id =tourService.findId();
         String[] selectedValues = req.getParameterValues("myCheckbox");
-        for (String str:selectedValues) {
+        if(selectedValues!=null){for (String str:selectedValues) {
             int tag_id= Integer.parseInt(str);
-            tour_tagService.create(new Tour_tag(tour_id,tag_id));
-        }
+            tour_tagService.create(new Tour_tag(tour.getTour_id(),tag_id));
+        }}
         req.setAttribute("tour",tour);
         req.setAttribute("message", "Created");
         req.setAttribute("tagList", tagService.findAll());
         req.getRequestDispatcher("creat.jsp").forward(req,resp);
     }
+    public void editTour(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int id = Integer.parseInt(req.getParameter("id"));
+        String name = req.getParameter("name");
+        Double price = Double.valueOf(req.getParameter("price"));
+        LocalDate start_time= LocalDate.parse(req.getParameter("start_time"));
+        LocalDate end_time= LocalDate.parse(req.getParameter("end_time"));
+        String img =req.getParameter("img");
+        String description =req.getParameter("description");
 
+        Tour tour= new Tour(id,name,price,start_time,end_time,img,description);
+        tourService.edit(tour);
+        tour_tagService.deleteByTourId(id);
+        String[] selectedValues = req.getParameterValues("myCheckbox");
+        if(selectedValues!=null){for (String str:selectedValues) {
+            int tag_id= Integer.parseInt(str);
+            tour_tagService.create(new Tour_tag(tour.getTour_id(),tag_id));
+        }}
+
+        req.setAttribute("tour",tour);
+        req.setAttribute("tagList", tagService.findAll());
+        req.setAttribute("message", "edited");
+        req.getRequestDispatcher("edit.jsp").forward(req,resp);
+    }
 }

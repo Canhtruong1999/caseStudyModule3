@@ -1,6 +1,6 @@
-package Dao;
+package dao;
 
-import Model.Tag;
+import model.Tag;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

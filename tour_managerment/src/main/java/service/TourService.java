@@ -1,14 +1,14 @@
 package service;
 
-import Dao.TourDao;
-import Model.Tour;
-import pageable.PageAble;
+import dao.TourDao;
+import model.Tour;
+import dto.Pageable;
 
 import java.util.List;
 
 public class TourService {
     TourDao tourDao=new TourDao();
-    public List<Tour> findAll(PageAble pageAble){
+    public List<Tour> findAll(Pageable pageAble){
         return tourDao.findAll(pageAble);
     }
     public Tour findById(int id){
@@ -19,5 +19,11 @@ public class TourService {
     }
     public int findId(){
        return tourDao.findID();
+    }
+    public void edit(Tour tour){
+        tourDao.updateTour(tour);
+    }
+    public void delete(int id ){
+        tourDao.deleteTour(id);
     }
 }

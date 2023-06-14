@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 public class Tour_tag {
     private int tour_tag_id;
@@ -26,6 +26,12 @@ public class Tour_tag {
     }
 
     public void setTag_id(int tag_id) {
+        this.tag_id = tag_id;
+    }
+
+    public Tour_tag(int tour_tag_id, int tour_id, int tag_id) {
+        this.tour_tag_id = tour_tag_id;
+        this.tour_id = tour_id;
         this.tag_id = tag_id;
     }
 
